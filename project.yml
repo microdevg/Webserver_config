@@ -127,16 +127,16 @@
   :test:
       # 1. Macro de nivel de log por defecto (Compile-time log level)
       # 3 = Warning (ESP_LOG_WARN)
-      - CONFIG_LOG_DEFAULT_LEVEL=3 
+      #- CONFIG_LOG_DEFAULT_LEVEL=3 
       
       # 2. Macro de nivel de log máximo (Maximum level compiled into binary)
       # 5 = Debug o Verbose (ESP_LOG_DEBUG o ESP_LOG_VERBOSE)
-      - CONFIG_LOG_MAXIMUM_LEVEL=5 
+      #- CONFIG_LOG_MAXIMUM_LEVEL=5 
       
       # 3. Define el target ESP (a veces es necesario para las bibliotecas)
       # La falta de esta macro puede causar problemas en librerías más complejas.
-      - ESP_PLATFORM 
-      - ESP32 # Si estás apuntando a un ESP32 clásico
+      #- ESP_PLATFORM 
+      #- ESP32 # Si estás apuntando a un ESP32 clásico
       
       # 4. (Opcional) Define la macro del TAG si la usas de forma específica
       # Si tu código tiene líneas como 'static const char *TAG = "APIMEM";', no la necesitas.
@@ -164,6 +164,15 @@
 
 # Configuration Options specific to CMock. See CMock docs for details
 :cmock:
+  :mock_only:
+        # Los mocks que ya tenías (nvs)
+        - nvs_flash.h
+        - nvs.h
+        # Nuevos mocks para resolver los errores de enlazado (linking)
+        - esp_err.h     # Contiene esp_err_to_name, _esp_error_check_failed
+        - esp_log.h     # Contiene esp_log_timestamp, esp_log_write
+        # Si hay más errores, revisa y añade el header correspondiente.
+
   # Core conffiguration
   :plugins:                        # What plugins should be used by CMock?
     - :ignore

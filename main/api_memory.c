@@ -18,17 +18,17 @@ esp_err_t memory_init(void)
 {
     esp_err_t err = nvs_flash_init();
     if (err == ESP_ERR_NVS_NO_FREE_PAGES || err == ESP_ERR_NVS_NEW_VERSION_FOUND) {
-        ESP_ERROR_CHECK(nvs_flash_erase());
+        nvs_flash_erase();
         err = nvs_flash_init();
     }
     if (err != ESP_OK) {
-        ESP_LOGE(TAG, "Error inicializando NVS: %s", esp_err_to_name(err));
+        printf( "Error inicializando NVS");
         return err;
     }
 
     err = nvs_open(NAMESPACE_NAME, NVS_READWRITE, &s_nvs_handle);
     if (err != ESP_OK) {
-        ESP_LOGE(TAG, "Error abriendo namespace NVS: %s", esp_err_to_name(err));
+        printf( "Error abriendo namespace NVS");
     }
     return err;
 }
@@ -48,7 +48,7 @@ esp_err_t memory_deinit(void)
 
 esp_err_t memory_get(api_memory_type_t type, const char *key, void *data_ptr)
 {
-    if (!s_nvs_handle) return ESP_ERR_INVALID_STATE;
+  //  if (!s_nvs_handle) return ESP_ERR_INVALID_STATE;
     if (!key || !data_ptr) return ESP_ERR_INVALID_ARG;
 
     esp_err_t err;
@@ -101,7 +101,7 @@ esp_err_t memory_get(api_memory_type_t type, const char *key, void *data_ptr)
     }
 
     if (err != ESP_OK) {
-        ESP_LOGW(TAG, "Error al leer clave '%s': %s", key, esp_err_to_name(err));
+        printf( "Error al leer clave '%s': ", key);
     }
 
     return err;
@@ -113,7 +113,7 @@ esp_err_t memory_get(api_memory_type_t type, const char *key, void *data_ptr)
 
 esp_err_t memory_set(api_memory_type_t type, const char *key, const void *data)
 {
-    if (!s_nvs_handle) return ESP_ERR_INVALID_STATE;
+  //  if (!s_nvs_handle) return ESP_ERR_INVALID_STATE;
     if (!key || !data) return ESP_ERR_INVALID_ARG;
 
     esp_err_t err;
@@ -141,7 +141,7 @@ esp_err_t memory_set(api_memory_type_t type, const char *key, const void *data)
     }
 
     if (err != ESP_OK) {
-        ESP_LOGE(TAG, "Error al escribir clave '%s': %s", key, esp_err_to_name(err));
+        printf( "Error al escribir clave '%s'", key);
     }
 
     return err;
