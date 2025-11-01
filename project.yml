@@ -102,7 +102,7 @@
     - main/**
   :include:
     - main/** # In simple projects, this entry often duplicates :source
-    - components/nvs_flash/**
+    - components/nvs_flash/include/**
     - components/log/**
     - components/esp_partition/**
     - components/esp_common/include/**
